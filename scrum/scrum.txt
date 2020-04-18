@@ -1,0 +1,5 @@
+This folder is used to for pdfs related to scrum work
+1. UserStories.pdf
+2. ProductBacklog.pdf
+3. BurndownChart.pdf
+4. DailyScrum.pdf

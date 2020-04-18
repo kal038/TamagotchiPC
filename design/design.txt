@@ -1,0 +1,4 @@
+This folder is used to save pdfs related to our design
+1. UseCaseDiagram.pdf
+2. CRCCards.pdf
+3. Class Diagram.pdf
