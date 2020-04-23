@@ -217,8 +217,5 @@ public class PetMain {
         //TODO - same as readAttributes
     }
 
-    public static void main(String[] args) {
-
-    }
 }
 
