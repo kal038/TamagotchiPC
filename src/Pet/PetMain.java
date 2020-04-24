@@ -19,11 +19,11 @@
 package
         Pet;
 
-import java.io.File;
+import java.io.*;
 import java.util.Date;
 import java.util.Scanner;
 
-public class PetMain {
+public class PetMain implements Serializable {
 
     /**
      * stores the date when the pet was created
@@ -92,6 +92,7 @@ public class PetMain {
      * the sleepiness should decrease (between 0 - 0.99)
      */
     private double sleepinessRate;
+
 
     private final int MAX_STAT_VALUE = 100;
     private final double DEFAULT_RATE = 0.7;
@@ -191,30 +192,172 @@ public class PetMain {
         this.sleepinessRate += increaseBy;
     }
 
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getCurDate() {
+        return curDate;
+    }
+
+    public void setCurDate(Date curDate) {
+        this.curDate = curDate;
+    }
+
+    public Date getSavedDate() {
+        return savedDate;
+    }
+
+    public void setSavedDate(Date savedDate) {
+        this.savedDate = savedDate;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getHunger() {
+        return hunger;
+    }
+
+    public void setHunger(int hunger) {
+        this.hunger = hunger;
+    }
+
+    public int getHappiness() {
+        return happiness;
+    }
+
+    public void setHappiness(int happiness) {
+        this.happiness = happiness;
+    }
+
+    public int getHygiene() {
+        return hygiene;
+    }
+
+    public void setHygiene(int hygiene) {
+        this.hygiene = hygiene;
+    }
+
+    public int getSleep() {
+        return sleep;
+    }
+
+    public void setSleep(int sleep) {
+        this.sleep = sleep;
+    }
+
+    public double getHungerRate() {
+        return hungerRate;
+    }
+
+    public void setHungerRate(double hungerRate) {
+        this.hungerRate = hungerRate;
+    }
+
+    public double getHappinessRate() {
+        return happinessRate;
+    }
+
+    public void setHappinessRate(double happinessRate) {
+        this.happinessRate = happinessRate;
+    }
+
+    public double getHygieneRate() {
+        return hygieneRate;
+    }
+
+    public void setHygieneRate(double hygieneRate) {
+        this.hygieneRate = hygieneRate;
+    }
+
+    public double getSleepinessRate() {
+        return sleepinessRate;
+    }
+
+    public void setSleepinessRate(double sleepinessRate) {
+        this.sleepinessRate = sleepinessRate;
+    }
+
     /**
      * saves the pets current state in a save file provided
      *
-     * @param saveFile save file where all the pets attributes are stored
      */
-    void saveState(File saveFile) {
+    void saveState() {
         this.savedDate = new Date();
-        //TODO = add other functionality to save other things such as happiness etc.
+        try {
+            FileOutputStream f = new FileOutputStream(new File("saveFile.txt") );
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            o.writeObject(this);
+
+            o.close();
+            f.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+        catch (IOException i) {
+            System.out.println("Error initializing");
+        }
+
     }
 
     /**
      * reading attributes from the save file
      *
-     * @param saveFile
      */
-    void readAttributes(File saveFile) {
-        //TODO - decide how to save stuff in the final
-    }
+    void readAttributes() {
+        try {
+            FileInputStream fi = new FileInputStream(new File("saveFile.txt"));
+            ObjectInputStream oi = new ObjectInputStream(fi);
 
-    /**
-     * helper function for saveState, which helps to write the attributes to the save file
-     */
-    void writeAttributes() {
-        //TODO - same as readAttributes
+            PetMain savedPet = (PetMain) oi.readObject();
+            this.setDateCreated(savedPet.getDateCreated());
+            this.setName(savedPet.getName());
+            this.setAge(savedPet.getAge());
+            this.setHunger(savedPet.getHunger());
+            this.setHappiness(savedPet.getHappiness());
+            this.setHygiene(savedPet.getHygiene());
+            this.setSleep(savedPet.getSleep());
+            this.setHungerRate(savedPet.getHungerRate());
+            this.setHappinessRate(savedPet.getHappinessRate());
+            this.setHygieneRate(savedPet.getHygieneRate());
+            this.setSleepinessRate(savedPet.getSleepinessRate());
+
+            oi.close();
+            fi.close();
+
+        }
+
+        catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
+        catch (IOException i) {
+            System.out.println("Error initializing");
+        }
+
+        catch (ClassNotFoundException e) {
+            System.out.println("Class not found");
+        }
     }
 
 }
