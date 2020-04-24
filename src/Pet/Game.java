@@ -19,13 +19,30 @@
 package
         Pet;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Game {
     /*
      * This class simulates an instance of a Game
      */
+    PetMain myPet ;
+    Date startDate ;
+    Date currDate;
 
-    public static void main(String[] args) {
-        PetMain myPet = new PetMain("Charizard");
-        myPet.increaseHappinessRate(50);
+    public Game(PetMain myPet) {
+        this.myPet = myPet;
+        this.startDate = new Date(); // this marks when the Game instance was first created
+        this.currDate = new Date(); // this keeps tracks of the current Date
     }
+
+    public void initPet(String petName) {
+        this.myPet = new PetMain(petName);
+    }
+
+    public void advanceGameTime(int days) {
+        this.myPet.updateAge(days);
+        this.currDate = TimeUtil.skipAheadDays(days, this.currDate);
+    }
+
 }
