@@ -50,6 +50,10 @@ public class GUIView extends Application {
 
     private VBox menuView;
 
+    private VBox startView;
+
+    private ImageView startImg;
+
     /**
      * All the stat bar objects
      */
@@ -80,6 +84,12 @@ public class GUIView extends Application {
     private Button newPetBtn;
     private Button saveStatBtn;
 
+    /**
+     * Start Menu Buttons
+     */
+    private Button newGameBtn;
+    private Button continueBtn;
+
     private Label petNameLbl = new Label("PetExample");
     private Label petAgeLbl = new Label("1 day");
 
@@ -99,6 +109,23 @@ public class GUIView extends Application {
 
         topPane = new HBox();
         bottomPane = new HBox();
+
+        startImg = new ImageView(new Image(new
+                FileInputStream("src/Images/menu_img.png")));
+
+        startImg.setFitHeight(300);
+        startImg.setFitWidth(300);
+        startImg.setPreserveRatio(true);
+
+        newGameBtn = createMenuButton("New Game");
+        continueBtn = createMenuButton("Continue");
+
+        startView = new VBox();
+        startView.setSpacing(30);
+        startView.setPrefWidth(WIDTH);
+        startView.setAlignment(Pos.CENTER);
+        startView.setPadding(new Insets(30, 30, 30, 30));
+        startView.getChildren().addAll(startImg, newGameBtn, continueBtn);
 
         initActionButtons();
         configTopPane();
@@ -168,6 +195,7 @@ public class GUIView extends Application {
         configBottomPane();
 
         root.getChildren().addAll(topPane, mainDisplay, bottomPane);
+//        root.getChildren().addAll(startView);
 
         primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.sizeToScene();
