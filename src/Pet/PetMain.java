@@ -95,7 +95,7 @@ public class PetMain implements Serializable {
 
 
     private final int MAX_STAT_VALUE = 100;
-    private final double DEFAULT_RATE = 0.7;
+    private final double DEFAULT_RATE = 0.03;
 
     public PetMain(String name) {
         this.dateCreated = new Date();
@@ -334,20 +334,53 @@ public class PetMain implements Serializable {
         }
     }
 
-    public void feedPet(Food foodType, int quantity){
+    private final int MAX_INCREASE = 10;
 
+    /**
+     * method that actually interacts with the GUI and main game's Pet instance, and feeds the pet
+     * according to the amount of food (quantity) and the type of food (foodType)
+     * @param foodType Enum of Food that has different foods with different multiplier values
+     * @param quantity quantity of the Food that we are providing the pet
+     */
+    public void feedPet(Food foodType, int quantity) throws Exception {
+
+        this.increaseHunger(foodType.getFoodMultiplier() * quantity);
     }
 
-    public void walkPet() {
+    /**
+     * method that actually interacts with the GUI and main game's Pet instance, and makes the pet
+     * happier according to the walk
+     * @param walkTime Time that the pet is taken for a walk (can be max 10 minutes)
+     */
+    public void walkPet(double walkTime) throws Exception {
 
+        if (walkTime <= MAX_INCREASE) {
+            this.increaseHappiness(this.getHappinessRate() * walkTime);
+        }
     }
 
-    public void sleepPet() {
+    /**
+     * method that actually interacts with the GUI and main game's Pet instance, and increases
+     * the pets sleep status by putting the pet to sleep for an input amount of minutes
+     * @param sleepTime Time that the pet is allowed to sleep (can be max 10 minutes)
+     */
+    public void sleepPet(double sleepTime) throws Exception {
 
+        if (sleepTime <= MAX_INCREASE) {
+            this.increaseSleep(this.getSleepinessRate() * sleepTime);
+        }
     }
 
-    public void petPet() {
-        
+    /**
+     * method that actually interacts with the GUI and main game's Pet instance, and increases
+     *  the pets happiness status by petting it a number of times (max is 10)
+     * @param numberOfPets the number of times the user pets the pet
+     */
+    public void petPet(double numberOfPets) throws Exception {
+
+        if (numberOfPets <= MAX_INCREASE) {
+            this.increaseHappiness(this.getHappinessRate() * numberOfPets);
+        }
     }
 
     /**
