@@ -33,6 +33,16 @@ public class GUIController {
                 setView(theView.getMenuView());
             }
         });
+
+        theView.getStatsBtn().setOnAction(event -> {
+            if (viewMode == STATS) {
+                viewMode = PET;
+                setView(theView.getPetView());
+            } else {
+                viewMode = STATS;
+                setView(theView.getStatsView());
+            }
+        });
     }
 
     private void setView(Node view) {
