@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -44,12 +45,12 @@ public class GUIView {
     private Button skipBtn;
     private Button statsBtn;
 
-    private Button resetPetBtn;
-    private Button newPetBtn;
-    private Button saveStatBtn;
+    private Button saveExitBtn;
 
-    private Button newGameBtn;
-    private Button continueBtn;
+    private Button newPetBtn;
+    private Button loadPetBtn;
+
+    private TextField petNameTxt;
 
     private Label petNameLbl = new Label("PetExample");
     private Label petAgeLbl = new Label("1 day");
@@ -82,21 +83,28 @@ public class GUIView {
     }
 
     private void configMenuView() {
-        newPetBtn = createMenuButton("Create A New Pet");
-        resetPetBtn = createMenuButton("Reset Current Pet");
-        saveStatBtn = createMenuButton("Save Pet State");
+        saveExitBtn = createMenuButton("Save and Exit");
 
         menuView = new VBox();
         menuView.setSpacing(30);
         menuView.setPrefWidth(WIDTH);
         menuView.setAlignment(Pos.CENTER);
         menuView.setPadding(new Insets(100, 30, 30, 30));
-        menuView.getChildren().addAll(newPetBtn, resetPetBtn, saveStatBtn);
+        menuView.getChildren().addAll(saveExitBtn);
     }
 
     private void configPetView() throws FileNotFoundException {
         petView = new ImageView(new Image(new
                 FileInputStream("src/Images/bixby_pet.gif")));
+
+        petView.setFitHeight(300);
+        petView.setFitWidth(300);
+        petView.setPreserveRatio(true);
+    }
+
+    public void updatePetView() throws FileNotFoundException {
+        petView = new ImageView(new Image(new
+                FileInputStream("src/Images/bixby_pet2.gif")));
 
         petView.setFitHeight(300);
         petView.setFitWidth(300);
@@ -120,19 +128,24 @@ public class GUIView {
         ImageView startImg = new ImageView(new Image(new
                 FileInputStream("src/Images/menu_img.png")));
 
+        petNameTxt = new TextField();
+        petNameTxt.setText("Reggie");
+        petNameTxt.setMaxWidth(150);
+
         startImg.setFitHeight(300);
         startImg.setFitWidth(300);
         startImg.setPreserveRatio(true);
 
-        newGameBtn = createMenuButton("New Game");
-        continueBtn = createMenuButton("Continue");
+        newPetBtn = createMenuButton("Create New Pet");
+        loadPetBtn = createMenuButton("Load Pet");
 
         startView = new VBox();
-        startView.setSpacing(30);
+        startView.setSpacing(10);
         startView.setPrefWidth(WIDTH);
         startView.setAlignment(Pos.CENTER);
-        startView.setPadding(new Insets(30, 30, 30, 30));
-        startView.getChildren().addAll(startImg, newGameBtn, continueBtn);
+        startView.setPadding(new Insets(10, 30, 30, 30));
+        startView.getChildren().addAll(startImg, new Label("Pet Name : "),
+                petNameTxt, newPetBtn, loadPetBtn);
     }
 
     private void configStatsView() {
@@ -300,24 +313,16 @@ public class GUIView {
         return statsBtn;
     }
 
-    public Button getResetPetBtn() {
-        return resetPetBtn;
+    public Button getSaveExitBtn() {
+        return saveExitBtn;
     }
 
     public Button getNewPetBtn() {
         return newPetBtn;
     }
 
-    public Button getSaveStatBtn() {
-        return saveStatBtn;
-    }
-
-    public Button getNewGameBtn() {
-        return newGameBtn;
-    }
-
-    public Button getContinueBtn() {
-        return continueBtn;
+    public Button getLoadPetBtn() {
+        return loadPetBtn;
     }
 
     public static int getHEIGHT() {
@@ -331,4 +336,14 @@ public class GUIView {
     public AnchorPane getGameView() {
         return gameView;
     }
+
+    public TextField getPetNameTxt() {
+        return petNameTxt;
+    }
+
+    public void setPetNameLbl(String petName) {
+        this.petNameLbl.setText(petName);
+    }
+
+
 }
