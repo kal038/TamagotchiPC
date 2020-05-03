@@ -48,6 +48,14 @@ public class GUIController {
             /**
              * load functionality
              */
+            viewMode = MAIN;
+            myPet =  new PetMain("DummyPet");
+            myGame = new Game(myPet);
+            myGame.getMyPet().readAttributes();
+            System.out.println(myGame.getMyPet().getName());
+            theView.setPetNameLbl(myGame.getMyPet().getName());
+            setRoot(theView.getGameView());
+            setView(theView.getPetImgView());
         });
 
         theView.getMenuBtn().setOnAction(event -> {
@@ -226,6 +234,7 @@ public class GUIController {
             /**
              * Save functionality here
              */
+            myGame.getMyPet().saveState();
             System.exit(0);
         });
     }

@@ -436,7 +436,7 @@ public class PetMain implements Serializable {
      * saves the pets current state in a save file provided
      *
      */
-    void saveState() {
+    public void saveState() {
         this.savedDate = new Date();
         try {
             FileOutputStream f = new FileOutputStream(new File("saveFile.txt") );
@@ -463,7 +463,7 @@ public class PetMain implements Serializable {
      * reading attributes from the save file
      *
      */
-    void readAttributes() {
+    public void readAttributes() {
         try {
             FileInputStream fi = new FileInputStream(new File("saveFile.txt"));
             ObjectInputStream oi = new ObjectInputStream(fi);
