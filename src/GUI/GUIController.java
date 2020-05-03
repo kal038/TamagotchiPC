@@ -104,12 +104,18 @@ public class GUIController {
                 setView(theView.getWalkView());
             }
             /**
-             * Clean functionality
+             * Walk functionality
              */
         });
 
         theView.getWalkConfBtn().setOnAction(event -> {
             // Walk Now button handler
+            try {
+                myPet.walkPet(theView.getWalkSliderVal());
+                theView.getHappinessStats().setStatValue(myGame.getMyPet().getHappiness() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         });
 
         theView.getPetBtn().setOnAction(event -> {
@@ -127,6 +133,12 @@ public class GUIController {
 
         theView.getPetConfBtn().setOnAction(event -> {
             // Pet Now button handler
+            try {
+                myPet.petPet(theView.getPetSliderVal());
+                theView.getHappinessStats().setStatValue(myGame.getMyPet().getHappiness() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         });
 
         theView.getSleepBtn().setOnAction(event -> {
@@ -144,10 +156,22 @@ public class GUIController {
 
         theView.getSleepConfBtn().setOnAction(event -> {
             // Sleep now button handler
+            System.out.printf("putting to sleep for %d min\n", theView.getSleepSliderVal());
+            try {
+                myPet.sleepPet(theView.getSleepSliderVal());
+                theView.getSleepStats().setStatValue(myGame.getMyPet().getSleep() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
         });
 
         theView.getSkipBtn().setOnAction(event -> {
-
+            if (myGame.getMyPet().getSleep() == 0 && myGame.getMyPet().getHygiene() == 0 && myGame.getMyPet().getHunger() == 0 && myGame.getMyPet().getHappiness() == 0) {
+                setRoot(theView.getDeadPetView());
+                System.out.println("Your pet is dead");
+                theView.getDeadPetView();
+            }
 
             try {
                 theView.updatePetImgView("bixby_pet.gif");// from neal's function
@@ -162,19 +186,33 @@ public class GUIController {
             /**
              * Skip functionality (DONE)
              */
-            // decrease stats by 5 everyday
+            // decrease stats by 10 everyday
             try {
                 myGame.getMyPet().decreaseHappiness(10);
-                myGame.getMyPet().decreaseHunger(10);
-                myGame.getMyPet().decreaseSleep(10);
-                myGame.getMyPet().decreaseHygiene(10);
                 theView.getHappinessStats().setStatValue(myGame.getMyPet().getHappiness() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            try {
+                myGame.getMyPet().decreaseHunger(10);
                 theView.getHungerStats().setStatValue(myGame.getMyPet().getHunger() / 100.0);
-                theView.getHygieneStats().setStatValue(myGame.getMyPet().getHygiene() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+            try {
+                myGame.getMyPet().decreaseSleep(10);
                 theView.getSleepStats().setStatValue(myGame.getMyPet().getSleep() / 100.0);
             } catch (Exception e) {
-                setRoot(theView.getDeadPetView());
-//                System.out.println("Your pet is dead");
+                System.out.println(e);
+            }
+
+            try {
+                myGame.getMyPet().decreaseHygiene(10);
+                theView.getHygieneStats().setStatValue(myGame.getMyPet().getHygiene() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
             }
 
 

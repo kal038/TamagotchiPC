@@ -101,7 +101,7 @@ public class PetMain implements Serializable {
 
 
     private final int MAX_STAT_VALUE = 100;
-    private final double DEFAULT_RATE = 0.03;
+    private final double DEFAULT_RATE = 10;
 
     public PetMain(String name) {
         this.dateCreated = new Date();
@@ -329,7 +329,7 @@ public class PetMain implements Serializable {
      * @throws Exception
      */
     public void increaseSleep(double sleepIncrease) throws Exception {
-        if (this.sleep + sleepIncrease <= MAX_STAT_VALUE) {
+        if (this.sleep + (sleepIncrease ) <= MAX_STAT_VALUE) {
             this.sleep += sleepIncrease;
         } else {
             this.sleep = MAX_STAT_VALUE;
