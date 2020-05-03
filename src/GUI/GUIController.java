@@ -1,5 +1,6 @@
 package GUI;
 
+import Pet.PetMain;
 import javafx.scene.Node;
 
 import java.io.FileNotFoundException;
@@ -21,9 +22,13 @@ public class GUIController {
         theView.getNewPetBtn().setOnAction(event -> {
             viewMode = PET;
             /**
-             * Initialize pet here
+             * Initialize pet here (DONE)
+             *
              */
-            theView.setPetNameLbl(theView.getPetNameTxt().getText());
+            String petName = theView.getPetNameTxt().getText();
+            PetMain myPet = new PetMain(petName);
+            System.out.println(petName);
+            theView.setPetNameLbl(petName);
             setRoot(theView.getGameView());
             setView(theView.getPetView());
         });
