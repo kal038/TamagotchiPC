@@ -150,7 +150,8 @@ public class GUIView {
     }
 
     public Food getSelectedFood() {
-        return Food.valueOf(foodGroup.getSelectedToggle().toString());
+        return Food.valueOf(foodGroup.getSelectedToggle().
+                toString().split("\'")[1].toUpperCase());
     }
 
     private void configPetView() throws FileNotFoundException {
