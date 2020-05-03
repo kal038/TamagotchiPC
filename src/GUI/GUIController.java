@@ -148,7 +148,7 @@ public class GUIController {
 
 
             /**
-             * Skip functionality (HALF-DONE, need to decrease the stat bars)
+             * Skip functionality (DONE)
              */
             // decrease stats by 5 everyday
             try {
