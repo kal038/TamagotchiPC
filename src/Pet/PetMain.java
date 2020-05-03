@@ -296,6 +296,60 @@ public class PetMain implements Serializable {
         this.sleepinessRate = sleepinessRate;
     }
 
+
+    /**
+     * @param hungerIncrease hunger increase when being fed well
+     */
+    public void increaseHunger(double hungerIncrease) throws Exception {
+        if (this.hunger + hungerIncrease <= MAX_STAT_VALUE) {
+            this.hunger += hungerIncrease;
+        } else {
+            throw new Exception("Statistic can not be greater than MAX value");
+        }
+    }
+
+    /**
+     * method to increase the actual sleep statistic when you put the pet to bed for a period of time
+     * @param sleepIncrease
+     * @throws Exception
+     */
+    public void increaseSleep(double sleepIncrease) throws Exception {
+        if (this.sleep + sleepIncrease <= MAX_STAT_VALUE) {
+            this.sleep += sleepIncrease;
+        } else {
+            throw new Exception("Statistic can not be greater than MAX value");
+        }
+    }
+
+    /**
+     * method to increase the actual Happiness statistic of the pet when you pet or walk the pet
+     * @param happinessIncrease
+     * @throws Exception
+     */
+    public void increaseHappiness (double happinessIncrease) throws Exception {
+        if (this.happiness + happinessIncrease <= MAX_STAT_VALUE) {
+            this.happiness += happinessIncrease;
+        } else {
+            throw new Exception("Statistic can not be greater than MAX value");
+        }
+    }
+
+    public void feedPet(Food foodType, int quantity){
+
+    }
+
+    public void walkPet() {
+
+    }
+
+    public void sleepPet() {
+
+    }
+
+    public void petPet() {
+        
+    }
+
     /**
      * saves the pets current state in a save file provided
      *

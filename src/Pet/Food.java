@@ -12,6 +12,11 @@ public enum Food {
         this.foodMultiplier = foodMultiplier;
     }
 
+
+    /**
+     * gets the food multiplier
+     * @return foodMultiplier
+     */
     public double getFoodMultiplier() {
         return foodMultiplier;
     }

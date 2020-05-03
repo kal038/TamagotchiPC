@@ -32,6 +32,10 @@ public class StatBar {
 
     public Label getStatLbl() { return statLbl; }
 
+    /**
+     * The statbar value is scaled out of 1.0, with 1.0 being to fullest and 0 being empty
+     * @param value
+     */
     public void setStatValue(double value) {
         statProgressBar.setProgress(value);
     }
