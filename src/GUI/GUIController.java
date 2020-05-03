@@ -108,6 +108,10 @@ public class GUIController {
              */
         });
 
+        theView.getWalkConfBtn().setOnAction(event -> {
+            // Walk Now button handler
+        });
+
         theView.getPetBtn().setOnAction(event -> {
             if (viewMode == PET) {
                 viewMode = MAIN;
@@ -121,6 +125,10 @@ public class GUIController {
              */
         });
 
+        theView.getPetConfBtn().setOnAction(event -> {
+            // Pet Now button handler
+        });
+
         theView.getSleepBtn().setOnAction(event -> {
             if (viewMode == SLEEP) {
                 viewMode = MAIN;
@@ -132,6 +140,10 @@ public class GUIController {
             /**
              * Sleep functionality
              */
+        });
+
+        theView.getSleepConfBtn().setOnAction(event -> {
+            // Sleep now button handler
         });
 
         theView.getSkipBtn().setOnAction(event -> {
