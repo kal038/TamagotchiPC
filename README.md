@@ -17,4 +17,6 @@ The game is compiled from 4 main packages: GUI, Images, Pet, and Main. GUI conta
 JavaFX 14  
 **Run Instructions** 
 Run the .jar file in the dist directory
+Reference:
+https://en.wikipedia.org/wiki/Tamagotchi
   
