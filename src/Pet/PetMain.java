@@ -318,6 +318,7 @@ public class PetMain implements Serializable {
         if (this.hunger + hungerIncrease <= MAX_STAT_VALUE) {
             this.hunger += hungerIncrease;
         } else {
+            this.hunger = MAX_STAT_VALUE;
             throw new Exception("Statistic can not be greater than MAX value");
         }
     }
@@ -331,6 +332,7 @@ public class PetMain implements Serializable {
         if (this.sleep + sleepIncrease <= MAX_STAT_VALUE) {
             this.sleep += sleepIncrease;
         } else {
+            this.sleep = MAX_STAT_VALUE;
             throw new Exception("Statistic can not be greater than MAX value");
         }
     }
@@ -344,6 +346,7 @@ public class PetMain implements Serializable {
         if (this.happiness + happinessIncrease <= MAX_STAT_VALUE) {
             this.happiness += happinessIncrease;
         } else {
+            this.happiness = MAX_STAT_VALUE;
             throw new Exception("Statistic can not be greater than MAX value");
         }
     }
