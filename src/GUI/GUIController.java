@@ -60,7 +60,7 @@ public class GUIController {
              */
         });
 
-        theView.getCleanBtn().setOnAction(event -> {
+        theView.getWalkBtn().setOnAction(event -> {
             /**
              * Clean functionality
              */

@@ -37,7 +37,7 @@ public class GUIView {
     private StatBar happinessStats;
 
     private Button feedBtn;
-    private Button cleanBtn;
+    private Button walkBtn;
     private Button sleepBtn;
     private Button petBtn;
 
@@ -200,7 +200,7 @@ public class GUIView {
 
     private void configTopPane() {
         feedBtn = createActionButton("Feed");
-        cleanBtn = createActionButton("Clean");
+        walkBtn = createActionButton("Clean");
         sleepBtn = createActionButton("Sleep");
         petBtn = createActionButton("Pet");
 
@@ -210,7 +210,7 @@ public class GUIView {
                 topPane.getPadding().getLeft() + topPane.getPadding().getRight())) / 3;
 
         topPane.setSpacing(spacing);
-        topPane.getChildren().addAll(feedBtn, cleanBtn, sleepBtn, petBtn);
+        topPane.getChildren().addAll(feedBtn, walkBtn, sleepBtn, petBtn);
 
         topPane.setLayoutX(0);
         topPane.setLayoutY(0);
@@ -289,8 +289,8 @@ public class GUIView {
         return feedBtn;
     }
 
-    public Button getCleanBtn() {
-        return cleanBtn;
+    public Button getWalkBtn() {
+        return walkBtn;
     }
 
     public Button getSleepBtn() {
