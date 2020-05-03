@@ -25,6 +25,7 @@ public class GUIView {
     private Label dayLbl;
 
     private ImageView petImgView;
+    private VBox deadPetView;
     private GridPane statsView;
     private VBox menuView;
     private VBox startView;
@@ -82,6 +83,7 @@ public class GUIView {
 
         configMainDisplay();
         configPetImgView();
+        configDeadPetView();
 
         configFeedView();
         configWalkView();
@@ -211,6 +213,23 @@ public class GUIView {
         petImgView.setFitHeight(300);
         petImgView.setFitWidth(300);
         petImgView.setPreserveRatio(true);
+    }
+
+    private void configDeadPetView() throws FileNotFoundException {
+        ImageView deadPetImg = new ImageView(new Image(new
+                FileInputStream("src/Images/dead_img.png")));
+
+        deadPetImg.setFitHeight(300);
+        deadPetImg.setFitWidth(300);
+        deadPetImg.setPreserveRatio(true);
+
+        deadPetView = new VBox();
+        deadPetView.setSpacing(10);
+        deadPetView.setPrefWidth(WIDTH);
+        deadPetView.setAlignment(Pos.CENTER);
+        deadPetView.setPadding(new Insets(100, 30, 30, 30));
+
+        deadPetView.getChildren().addAll(new Label("Your Pet Died!"), deadPetImg);
     }
 
     public void updatePetImgView(String image) throws FileNotFoundException {
@@ -483,6 +502,10 @@ public class GUIView {
     public StatBar getHappinessStats() { return happinessStats; }
 
     public void setPetNameLbl(String petName) { this.petNameLbl.setText(petName); }
+
+    public VBox getDeadPetView() {
+        return deadPetView;
+    }
 
     public Button getWalkConfBtn() {
         return walkConfBtn;

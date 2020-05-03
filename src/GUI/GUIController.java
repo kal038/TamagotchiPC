@@ -6,6 +6,7 @@ import Pet.PetMain;
 import javafx.scene.Node;
 
 import java.io.FileNotFoundException;
+import java.util.concurrent.TimeUnit;
 
 public class GUIController {
     private GUIView theView;
@@ -160,7 +161,8 @@ public class GUIController {
                 theView.getHygieneStats().setStatValue(myGame.getMyPet().getHygiene() / 100.0);
                 theView.getSleepStats().setStatValue(myGame.getMyPet().getSleep() / 100.0);
             } catch (Exception e) {
-                System.out.println("Your pet is dead");;
+                setRoot(theView.getDeadPetView());
+//                System.out.println("Your pet is dead");
             }
 
 
