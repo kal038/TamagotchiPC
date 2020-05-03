@@ -26,23 +26,54 @@ public class Game {
     /*
      * This class simulates an instance of a Game
      */
-    PetMain myPet ;
-    Date startDate ;
-    Date currDate;
+    private PetMain myPet ;
+    private Date startDate ;
+    private Date currDate;
+    private int dateCount ;
+    private int status;
+    private static int OFFLINE = 0;
+    private static int ONLINE = 1;
 
     public Game(PetMain myPet) {
         this.myPet = myPet;
         this.startDate = new Date(); // this marks when the Game instance was first created
         this.currDate = new Date(); // this keeps tracks of the current Date
+        this.dateCount = 1;
+        this.status = ONLINE;
     }
 
-    public void initPet(String petName) {
-        this.myPet = new PetMain(petName);
-    }
 
+    /**
+     * Advance the current date by "days" number of days
+     * @param days
+     */
     public void advanceGameTime(int days) {
+        // pet age is always in days
         this.myPet.updateAge(days);
         this.currDate = TimeUtil.skipAheadDays(days, this.currDate);
     }
 
+    public PetMain getMyPet() {
+        return myPet;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getCurrDate() {
+        return currDate;
+    }
+
+    public int getDateCount() {
+        return dateCount;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

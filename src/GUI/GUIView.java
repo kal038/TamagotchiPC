@@ -337,7 +337,7 @@ public class GUIView {
 
     private void configBottomPane() {
         menuBtn = createActionButton("Menu");
-        skipBtn = createActionButton("Skip");
+        skipBtn = createActionButton("Skip Day");
         statsBtn = createActionButton("Stats");
 
         createDayLbl();

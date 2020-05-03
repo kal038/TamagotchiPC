@@ -52,7 +52,7 @@ public class PetMain implements Serializable {
     private String name;
 
     /**
-     * Stores the age of the pet
+     * Stores the age of the pet (in days)
      */
     private int age;
 
@@ -106,7 +106,7 @@ public class PetMain implements Serializable {
     public PetMain(String name) {
         this.dateCreated = new Date();
         this.name = name;
-        this.age = 0;
+        this.age = 1; // start value is 1 day
         this.hunger = MAX_STAT_VALUE;
         this.happiness = MAX_STAT_VALUE;
         this.hygiene = MAX_STAT_VALUE;
@@ -350,6 +350,38 @@ public class PetMain implements Serializable {
 
     private final int MAX_INCREASE = 10;
 
+    public void decreaseHappiness (int decrease) throws Exception {
+        if (this.happiness - decrease >= 0) {
+            this.happiness -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
+    public void decreaseHunger (int decrease) throws Exception {
+        if (this.hunger - decrease >= 0) {
+            this.hunger -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
+    public void decreaseHygiene (int decrease) throws Exception {
+        if (this.hygiene - decrease >= 0) {
+            this.hygiene -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
+    public void decreaseSleep (int decrease) throws Exception {
+        if (this.sleep - decrease >= 0) {
+            this.sleep -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
     /**
      * method that actually interacts with the GUI and main game's Pet instance, and feeds the pet
      * according to the amount of food (quantity) and the type of food (foodType)
@@ -490,16 +522,16 @@ class PetAgeThread implements Runnable {
 
     @Override
     public void run() {
-        long diff = 0;
+//        long diff = 0;
         while (true) {
-            Date compareDate = new Date();
-            long diffInMillies = Math.abs(this.startDate.getTime() - compareDate.getTime());
-            diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            if (diff >= 1 && diff < 2) {
-                System.out.println("image set");
+//            Date compareDate = new Date();
+//            long diffInMillies = Math.abs(this.startDate.getTime() - compareDate.getTime());
+//            diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            if (this.pet.getAge() < 20) {
+                //System.out.println("image set");
                 pet.setPetImage("bixby_pet.gif");
-            }
-            if (diff >= 2) {
+            } else
+             {
                 pet.setPetImage("bixby_pet2.gif");
             }
         }

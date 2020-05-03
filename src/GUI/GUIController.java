@@ -1,5 +1,6 @@
 package GUI;
 
+import Pet.Game;
 import Pet.PetMain;
 import javafx.scene.Node;
 
@@ -7,6 +8,8 @@ import java.io.FileNotFoundException;
 
 public class GUIController {
     private GUIView theView;
+    private PetMain myPet;
+    private Game myGame;
 
     private static final int MAIN = 0;
     private static final int STATS = 1;
@@ -30,8 +33,10 @@ public class GUIController {
              *
              */
             String petName = theView.getPetNameTxt().getText();
-            PetMain myPet = new PetMain(petName);
-            System.out.println(petName);
+            myPet = new PetMain(petName);
+            // initialize the game instance
+            myGame = new Game(myPet);
+            System.out.println(myGame.getMyPet().getName());
             theView.setPetNameLbl(petName);
             setRoot(theView.getGameView());
             setView(theView.getPetImgView());
@@ -90,7 +95,7 @@ public class GUIController {
                 setView(theView.getWalkView());
             }
             /**
-             * Walk functionality
+             * Clean functionality
              */
         });
 
@@ -121,19 +126,43 @@ public class GUIController {
         });
 
         theView.getSkipBtn().setOnAction(event -> {
+            // check if the pet is alive
+//            if (myGame.getMyPet().getHappiness() == 0 || myGame.getMyPet().getHunger() == 0 || myGame.getMyPet().getHygiene() == 0 || myGame.getMyPet().getSleep() == 0 ) {
+//                System.out.println("Your pet is dead, GAME OVER");
+//            }
+
             try {
                 theView.updatePetImgView("bixby_pet.gif");// from neal's function
                 viewMode = MAIN;
+                theView.updatePetImgView(myGame.getMyPet().getPetImage());// from neal's function
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
             setView(theView.getPetImgView());
 
-            // helper method to update day
-            theView.updateDayLbl(2);
+
             /**
-             * Skip functionality
+             * Skip functionality (HALF-DONE, need to decrease the stat bars)
              */
+            // decrease stats by 5 everyday
+            try {
+                myGame.getMyPet().decreaseHappiness(10);
+                myGame.getMyPet().decreaseHunger(10);
+                myGame.getMyPet().decreaseSleep(10);
+                myGame.getMyPet().decreaseHygiene(10);
+                theView.getHappinessStats().setStatValue(myGame.getMyPet().getHappiness() / 100.0);
+                theView.getHungerStats().setStatValue(myGame.getMyPet().getHunger() / 100.0);
+                theView.getHygieneStats().setStatValue(myGame.getMyPet().getHygiene() / 100.0);
+                theView.getSleepStats().setStatValue(myGame.getMyPet().getSleep() / 100.0);
+            } catch (Exception e) {
+                System.out.println("Your pet is dead");;
+            }
+
+
+            // helper method to update day/age label
+            myGame.advanceGameTime(1);
+            theView.updateDayLbl(myGame.getMyPet().getAge());
+
         });
 
         theView.getSaveExitBtn().setOnAction(event -> {
