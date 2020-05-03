@@ -1,5 +1,6 @@
 package GUI;
 
+import Pet.Game;
 import Pet.PetMain;
 import javafx.scene.Node;
 
@@ -7,7 +8,8 @@ import java.io.FileNotFoundException;
 
 public class GUIController {
     private GUIView theView;
-
+    private PetMain myPet;
+    private Game myGame;
     private static final int PET = 0;
     private static final int STATS = 1;
     private static final int MENU = 2;
@@ -22,12 +24,14 @@ public class GUIController {
         theView.getNewPetBtn().setOnAction(event -> {
             viewMode = PET;
             /**
-             * Initialize pet here (DONE)
+             * Initialize pet here (DONE) (I initialized a pet using the Game instance)
              *
              */
             String petName = theView.getPetNameTxt().getText();
-            PetMain myPet = new PetMain(petName);
-            System.out.println(petName);
+            myPet = new PetMain(petName);
+            // initialize the game instance
+            myGame = new Game(myPet);
+            System.out.println(myGame.getMyPet().getName());
             theView.setPetNameLbl(petName);
             setRoot(theView.getGameView());
             setView(theView.getPetView());
@@ -84,18 +88,20 @@ public class GUIController {
         });
 
         theView.getSkipBtn().setOnAction(event -> {
-            try {
-                theView.updatePetView();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            setView(theView.getPetView());
-
-            // helper method to update day
-            theView.updateDayLbl(2);
+//            try {
+//                theView.updatePetView();
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+            //setView(theView.getPetView());
             /**
-             * Skip functionality
+             * Skip functionality (DONE)
              */
+
+            // helper method to update day/age label
+            myGame.advanceGameTime(1);
+            theView.updateDayLbl(myGame.getMyPet().getAge());
+
         });
 
         theView.getSaveExitBtn().setOnAction(event -> {
