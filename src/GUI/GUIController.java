@@ -10,7 +10,8 @@ public class GUIController {
 
     private static final int PET = 0;
     private static final int STATS = 1;
-    private static final int MENU = 2;
+    private static final int FEED = 2;
+    private static final int MENU = 3;
 
     private int viewMode;
 
@@ -60,6 +61,13 @@ public class GUIController {
         });
 
         theView.getFeedBtn().setOnAction(event -> {
+            if (viewMode == FEED) {
+                viewMode = PET;
+                setView(theView.getPetView());
+            } else {
+                viewMode = FEED;
+                setView(theView.getFeedView());
+            }
             /**
              * Feed Functionality
              */
@@ -85,7 +93,7 @@ public class GUIController {
 
         theView.getSkipBtn().setOnAction(event -> {
             try {
-                theView.updatePetView();
+                theView.updatePetView("bixby_pet.gif");// from neal's function
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
