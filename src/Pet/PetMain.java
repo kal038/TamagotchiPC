@@ -21,9 +21,15 @@ package
 
 import java.io.*;
 import java.util.Date;
-import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class PetMain implements Serializable {
+
+
+    /**
+     * Store the image of the pet
+     */
+    private String petImage;
 
     /**
      * stores the date when the pet was created
@@ -109,6 +115,10 @@ public class PetMain implements Serializable {
         this.happinessRate = DEFAULT_RATE;
         this.hygieneRate = DEFAULT_RATE;
         this.sleepinessRate = DEFAULT_RATE;
+        PetAgeThread petThread = new PetAgeThread(this, this.dateCreated);
+        Thread timethrd = new Thread(petThread);
+        timethrd.start();
+
     }
 
     /**
@@ -296,15 +306,21 @@ public class PetMain implements Serializable {
         this.sleepinessRate = sleepinessRate;
     }
 
+    public void setPetImage(String petImage) { this.petImage = petImage; }
+
+    public String getPetImage() { return petImage; }
+
     /**
      * saves the pets current state in a save file provided
      *
      */
     void saveState() {
-        this.savedDate = new Date();
         try {
             FileOutputStream f = new FileOutputStream(new File("saveFile.txt") );
             ObjectOutputStream o = new ObjectOutputStream(f);
+
+            Date newSaveDate = new Date();
+            this.setSavedDate(newSaveDate);
 
             o.writeObject(this);
 
@@ -341,6 +357,7 @@ public class PetMain implements Serializable {
             this.setHappinessRate(savedPet.getHappinessRate());
             this.setHygieneRate(savedPet.getHygieneRate());
             this.setSleepinessRate(savedPet.getSleepinessRate());
+            this.setSavedDate(savedPet.getSavedDate());
 
             oi.close();
             fi.close();
@@ -362,3 +379,42 @@ public class PetMain implements Serializable {
 
 }
 
+/**
+ * Helper class that runs a thread to check the age of the pet and change the image of the pet accordingly
+ */
+class PetAgeThread implements Runnable {
+
+    /**
+     * Birth date of the pet
+     */
+    private Date startDate;
+
+    /**
+     * Pet object being tested
+     */
+    private PetMain pet;
+
+
+    public PetAgeThread(PetMain pet, Date startDate) {
+        this.pet = pet;
+        this.startDate = startDate;
+    }
+
+    @Override
+    public void run() {
+        long diff = 0;
+        while (true) {
+            Date compareDate = new Date();
+            long diffInMillies = Math.abs(this.startDate.getTime() - compareDate.getTime());
+            diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+            if (diff >= 1 && diff < 2) {
+                System.out.println("image set");
+                pet.setPetImage("bixby_pet.gif");
+            }
+            if (diff >= 2) {
+                pet.setPetImage("bixby_pet2.gif");
+            }
+        }
+    }
+
+}
