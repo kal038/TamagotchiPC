@@ -97,7 +97,7 @@ public class GUIController {
 
         theView.getSkipBtn().setOnAction(event -> {
             try {
-                theView.updatePetView("bixby_pet.gif");// from neal's function
+                theView.updatePetView(myGame.getMyPet().getPetImage());// from neal's function
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -106,7 +106,7 @@ public class GUIController {
             // helper method to update day
             theView.updateDayLbl(2);
             /**
-             * Skip functionality (DONE)
+             * Skip functionality (HALF-DONE, need to decrease the stat bars)
              */
 
             // helper method to update day/age label

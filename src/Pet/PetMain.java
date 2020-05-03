@@ -495,7 +495,7 @@ class PetAgeThread implements Runnable {
 //            Date compareDate = new Date();
 //            long diffInMillies = Math.abs(this.startDate.getTime() - compareDate.getTime());
 //            diff = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
-            if (this.pet.getAge() < 10) {
+            if (this.pet.getAge() < 20) {
                 //System.out.println("image set");
                 pet.setPetImage("bixby_pet.gif");
             } else
