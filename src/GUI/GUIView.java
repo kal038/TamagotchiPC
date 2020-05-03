@@ -1,116 +1,123 @@
 package GUI;
 
-import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-
-public class GUIView extends Application {
+public class GUIView {
     private static final int HEIGHT = 500;
     private static final int WIDTH = 500;
 
     private AnchorPane root;
-
-    /**
-     * The top pane of the GUI where the
-     * action buttons live
-     */
     private HBox topPane;
-
-    /**
-     * The bottom pane of the GUI where the
-     * time indicator and other buttons live
-     */
     private HBox bottomPane;
-
-    /**
-     * The main display that gets updated
-     * according to the current view
-     */
     private VBox mainDisplay;
 
     private Label dayLbl;
 
     private ImageView petView;
-
     private GridPane statsView;
-
     private VBox menuView;
-
     private VBox startView;
+    private AnchorPane gameView;
 
-    private ImageView startImg;
-
-    /**
-     * All the stat bar objects
-     */
     private StatBar hungerStats;
     private StatBar hygieneStats;
     private StatBar sleepStats;
     private StatBar happinessStats;
 
-    /**
-     * All the action buttons
-     */
-    private ActionButton feedBtn;
-    private ActionButton cleanBtn;
-    private ActionButton sleepBtn;
-    private ActionButton petBtn;
+    private Button feedBtn;
+    private Button cleanBtn;
+    private Button sleepBtn;
+    private Button petBtn;
 
-    /**
-     * All other buttons
-     */
-    private ActionButton menuBtn;
-    private ActionButton skipBtn;
-    private ActionButton statsBtn;
+    private Button menuBtn;
+    private Button skipBtn;
+    private Button statsBtn;
 
-    /**
-     * Menu buttons
-     */
     private Button resetPetBtn;
     private Button newPetBtn;
     private Button saveStatBtn;
 
-    /**
-     * Start Menu Buttons
-     */
     private Button newGameBtn;
     private Button continueBtn;
 
     private Label petNameLbl = new Label("PetExample");
     private Label petAgeLbl = new Label("1 day");
 
-    private static final int PET = 0;
-    private static final int STATS = 1;
-    private static final int MENU = 2;
+    public GUIView() throws FileNotFoundException {
 
-    private int viewMode;
-
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) throws FileNotFoundException {
         root = new AnchorPane();
 
         topPane = new HBox();
         bottomPane = new HBox();
 
-        startImg = new ImageView(new Image(new
+        configStartView();
+
+        configTopPane();
+
+        configBottomPane();
+
+        configMainDisplay();
+
+        configPetView();
+
+        configMenuView();
+
+        configStatsView();
+
+        gameView = new AnchorPane();
+        gameView.getChildren().addAll(topPane, mainDisplay, bottomPane);
+
+//        root.getChildren().addAll(startView);
+    }
+
+    private void configMenuView() {
+        newPetBtn = createMenuButton("Create A New Pet");
+        resetPetBtn = createMenuButton("Reset Current Pet");
+        saveStatBtn = createMenuButton("Save Pet State");
+
+        menuView = new VBox();
+        menuView.setSpacing(30);
+        menuView.setPrefWidth(WIDTH);
+        menuView.setAlignment(Pos.CENTER);
+        menuView.setPadding(new Insets(100, 30, 30, 30));
+        menuView.getChildren().addAll(newPetBtn, resetPetBtn, saveStatBtn);
+    }
+
+    private void configPetView() throws FileNotFoundException {
+        petView = new ImageView(new Image(new
+                FileInputStream("src/Images/bixby_pet.gif")));
+
+        petView.setFitHeight(300);
+        petView.setFitWidth(300);
+        petView.setPreserveRatio(true);
+    }
+
+    private void configMainDisplay() {
+        mainDisplay = new VBox();
+        mainDisplay.setPrefWidth(WIDTH);
+        mainDisplay.setPadding(new Insets(10, 10, 10, 10));
+
+        double y = menuBtn.getPrefHeight() + bottomPane.getPadding().getTop() +
+                bottomPane.getPadding().getBottom();
+
+        mainDisplay.setLayoutY(y);
+        mainDisplay.setLayoutX(0);
+        mainDisplay.setAlignment(Pos.CENTER);
+    }
+
+    private void configStartView() throws FileNotFoundException {
+        ImageView startImg = new ImageView(new Image(new
                 FileInputStream("src/Images/menu_img.png")));
 
         startImg.setFitHeight(300);
@@ -126,87 +133,15 @@ public class GUIView extends Application {
         startView.setAlignment(Pos.CENTER);
         startView.setPadding(new Insets(30, 30, 30, 30));
         startView.getChildren().addAll(startImg, newGameBtn, continueBtn);
+    }
 
-        initActionButtons();
-        configTopPane();
-
-        mainDisplay = new VBox();
-        mainDisplay.setPrefWidth(WIDTH);
-        mainDisplay.setPadding(new Insets(10, 10, 10, 10));
-
-        double y = menuBtn.getActionButton().getPrefHeight() +
-                bottomPane.getPadding().getTop() + bottomPane.getPadding().getBottom();
-
-        mainDisplay.setLayoutY(y);
-        mainDisplay.setLayoutX(0);
-        mainDisplay.setAlignment(Pos.CENTER);
+    private void configStatsView() {
+        initStatBars();
 
         statsView = new GridPane();
         statsView.setHgap(30);
         statsView.setVgap(20);
 
-        initStatBars();
-
-        petView = new ImageView(new Image(new
-                FileInputStream("src/Images/bixby_pet.gif")));
-
-        petView.setFitHeight(300);
-        petView.setFitWidth(300);
-        petView.setPreserveRatio(true);
-
-        newPetBtn = createMenuButton("Create A New Pet");
-        resetPetBtn = createMenuButton("Reset Current Pet");
-        saveStatBtn = createMenuButton("Save Pet State");
-
-        menuView = new VBox();
-        menuView.setSpacing(30);
-        menuView.setPrefWidth(WIDTH);
-        menuView.setAlignment(Pos.CENTER);
-        menuView.setPadding(new Insets(100, 30, 30, 30));
-        menuView.getChildren().addAll(newPetBtn, resetPetBtn, saveStatBtn);
-
-        configStatsView();
-
-        viewMode = PET;
-        setView(petView);
-
-        createDayLbl();
-
-        statsBtn.getActionButton().setOnAction(event -> {
-            if (viewMode == STATS) {
-                viewMode = PET;
-                setView(petView);
-            } else {
-                viewMode = STATS;
-                setView(statsView);
-            }
-        });
-
-        menuBtn.getActionButton().setOnAction(event -> {
-            if (viewMode == MENU) {
-                viewMode = PET;
-                setView(petView);
-            } else {
-                viewMode = MENU;
-                setView(menuView);
-            }
-        });
-
-        configBottomPane();
-
-        root.getChildren().addAll(topPane, mainDisplay, bottomPane);
-//        root.getChildren().addAll(startView);
-
-        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
-        primaryStage.sizeToScene();
-        primaryStage.setResizable(false);
-
-        primaryStage.setTitle("Bixby : Pet Simulator");
-
-        primaryStage.show();
-    }
-
-    private void configStatsView() {
         statsView.setPadding(new Insets(30, 30, 30, 30));
 
         Label petNamePH = new Label("Pet Name : ");
@@ -243,31 +178,6 @@ public class GUIView extends Application {
         statsView.add(happinessStats.getStatProgressBar(), 1, 6);
     }
 
-    private void createDayLbl() {
-        dayLbl = new Label("Day 1");
-        dayLbl.setMinHeight(50);
-        dayLbl.setMinWidth(100);
-        dayLbl.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
-                new CornerRadii(5) , BorderWidths.DEFAULT)));
-        dayLbl.setAlignment(Pos.CENTER);
-    }
-
-    private void setView(Node view) {
-        mainDisplay.getChildren().clear();
-        mainDisplay.getChildren().add(view);
-    }
-
-    private void initActionButtons() {
-        feedBtn = new ActionButton(ActionTypes.FEED);
-        cleanBtn = new ActionButton(ActionTypes.CLEAN);
-        sleepBtn = new ActionButton(ActionTypes.SLEEP);
-        petBtn = new ActionButton(ActionTypes.PET);
-
-        menuBtn = new ActionButton(ActionTypes.MENU);
-        skipBtn = new ActionButton(ActionTypes.SKIP);
-        statsBtn = new ActionButton(ActionTypes.STATS);
-    }
-
     private void initStatBars() {
         hungerStats = new StatBar(StatTypes.HUNGER);
         hygieneStats = new StatBar(StatTypes.HYGIENE);
@@ -276,32 +186,40 @@ public class GUIView extends Application {
     }
 
     private void configTopPane() {
+        feedBtn = createActionButton("Feed");
+        cleanBtn = createActionButton("Clean");
+        sleepBtn = createActionButton("Sleep");
+        petBtn = createActionButton("Pet");
+
         topPane.setPadding(new Insets(20, 30, 20,  30));
 
-        double spacing = (WIDTH - (feedBtn.getActionButton().getPrefWidth()*4 +
+        double spacing = (WIDTH - (feedBtn.getPrefWidth()*4 +
                 topPane.getPadding().getLeft() + topPane.getPadding().getRight())) / 3;
 
         topPane.setSpacing(spacing);
-        topPane.getChildren().addAll(feedBtn.getActionButton(),
-                cleanBtn.getActionButton(), sleepBtn.getActionButton(),
-                petBtn.getActionButton());
+        topPane.getChildren().addAll(feedBtn, cleanBtn, sleepBtn, petBtn);
 
         topPane.setLayoutX(0);
         topPane.setLayoutY(0);
     }
 
     private void configBottomPane() {
+        menuBtn = createActionButton("Menu");
+        skipBtn = createActionButton("Skip");
+        statsBtn = createActionButton("Stats");
+
+        createDayLbl();
+
         bottomPane.setPadding(new Insets(20, 30, 20,  30));
 
-        double spacing = (WIDTH - (menuBtn.getActionButton().getPrefWidth()*4
-                + bottomPane.getPadding().getLeft() + bottomPane.getPadding().getRight())) / 3;
+        double spacing = (WIDTH - (menuBtn.getPrefWidth()*4 + bottomPane.getPadding().getLeft()
+                + bottomPane.getPadding().getRight())) / 3;
 
         bottomPane.setSpacing(spacing);
-        bottomPane.getChildren().addAll(dayLbl, menuBtn.getActionButton(),
-                skipBtn.getActionButton(), statsBtn.getActionButton());
+        bottomPane.getChildren().addAll(dayLbl, menuBtn, skipBtn, statsBtn);
 
-        double y = HEIGHT - (menuBtn.getActionButton().getPrefHeight() +
-                bottomPane.getPadding().getTop() + bottomPane.getPadding().getBottom());
+        double y = HEIGHT - (menuBtn.getPrefHeight() + bottomPane.getPadding().getTop()
+                + bottomPane.getPadding().getBottom());
 
         bottomPane.setLayoutX(0);
         bottomPane.setLayoutY(y);
@@ -312,5 +230,105 @@ public class GUIView extends Application {
         menuButton.setPrefWidth(150);
         menuButton.setPrefHeight(30);
         return menuButton;
+    }
+
+    private Button createActionButton(String btnLbl) {
+        Button actionButton = new Button(btnLbl);
+        actionButton.setPrefHeight(50);
+        actionButton.setPrefWidth(100);
+        return actionButton;
+    }
+
+    private void createDayLbl() {
+        dayLbl = new Label("Day 1");
+        dayLbl.setMinHeight(50);
+        dayLbl.setMinWidth(100);
+        dayLbl.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID,
+                new CornerRadii(5) , BorderWidths.DEFAULT)));
+        dayLbl.setAlignment(Pos.CENTER);
+    }
+
+    public AnchorPane getRoot() {
+        return root;
+    }
+
+    public VBox getMainDisplay() {
+        return mainDisplay;
+    }
+
+    public ImageView getPetView() {
+        return petView;
+    }
+
+    public GridPane getStatsView() {
+        return statsView;
+    }
+
+    public VBox getMenuView() {
+        return menuView;
+    }
+
+    public VBox getStartView() {
+        return startView;
+    }
+
+    public Button getFeedBtn() {
+        return feedBtn;
+    }
+
+    public Button getCleanBtn() {
+        return cleanBtn;
+    }
+
+    public Button getSleepBtn() {
+        return sleepBtn;
+    }
+
+    public Button getPetBtn() {
+        return petBtn;
+    }
+
+    public Button getMenuBtn() {
+        return menuBtn;
+    }
+
+    public Button getSkipBtn() {
+        return skipBtn;
+    }
+
+    public Button getStatsBtn() {
+        return statsBtn;
+    }
+
+    public Button getResetPetBtn() {
+        return resetPetBtn;
+    }
+
+    public Button getNewPetBtn() {
+        return newPetBtn;
+    }
+
+    public Button getSaveStatBtn() {
+        return saveStatBtn;
+    }
+
+    public Button getNewGameBtn() {
+        return newGameBtn;
+    }
+
+    public Button getContinueBtn() {
+        return continueBtn;
+    }
+
+    public static int getHEIGHT() {
+        return HEIGHT;
+    }
+
+    public static int getWIDTH() {
+        return WIDTH;
+    }
+
+    public AnchorPane getGameView() {
+        return gameView;
     }
 }
