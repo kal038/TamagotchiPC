@@ -31,4 +31,10 @@ public class StatBar {
     }
 
     public Label getStatLbl() { return statLbl; }
+
+    public void setStatValue(double value) {
+        statProgressBar.setProgress(value);
+    }
+
+    public double getStatValue() { return statProgressBar.getProgress(); }
 }
