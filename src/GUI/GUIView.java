@@ -3,9 +3,7 @@ package GUI;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -29,7 +27,15 @@ public class GUIView {
     private GridPane statsView;
     private VBox menuView;
     private VBox startView;
+    private VBox feedView;
     private AnchorPane gameView;
+
+    private ToggleGroup foodGroup;
+    private RadioButton apple;
+    private RadioButton grapes;
+    private RadioButton meat;
+    private RadioButton water;
+
 
     private StatBar hungerStats;
     private StatBar hygieneStats;
@@ -93,6 +99,11 @@ public class GUIView {
         menuView.getChildren().addAll(saveExitBtn);
     }
 
+    private void configFeedView() {
+        feedView = new VBox();
+        foodGroup = new ToggleGroup();
+    }
+
     private void configPetView() throws FileNotFoundException {
         petView = new ImageView(new Image(new
                 FileInputStream("src/Images/bixby_pet.gif")));
@@ -109,6 +120,13 @@ public class GUIView {
         petView.setFitHeight(300);
         petView.setFitWidth(300);
         petView.setPreserveRatio(true);
+    }
+
+    public void updateDayLbl(int day) {
+        dayLbl.setText("Day " + day);
+
+        bottomPane.getChildren().clear();
+        bottomPane.getChildren().addAll(dayLbl, menuBtn, skipBtn, statsBtn);
     }
 
     private void configMainDisplay() {

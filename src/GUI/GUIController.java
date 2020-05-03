@@ -85,6 +85,9 @@ public class GUIController {
                 e.printStackTrace();
             }
             setView(theView.getPetView());
+
+            // helper method to update day
+            theView.updateDayLbl(2);
             /**
              * Skip functionality
              */
