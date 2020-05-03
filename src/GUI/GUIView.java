@@ -1,5 +1,6 @@
 package GUI;
 
+import Pet.Food;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -35,7 +36,8 @@ public class GUIView {
     private RadioButton grapes;
     private RadioButton meat;
     private RadioButton water;
-
+    private RadioButton ant;
+    private RadioButton grass;
 
     private StatBar hungerStats;
     private StatBar hygieneStats;
@@ -78,6 +80,8 @@ public class GUIView {
 
         configPetView();
 
+        configFeedView();
+
         configMenuView();
 
         configStatsView();
@@ -100,8 +104,47 @@ public class GUIView {
     }
 
     private void configFeedView() {
-        feedView = new VBox();
+        VBox foodList = new VBox();
+        foodList.setPrefWidth(WIDTH);
+        foodList.setAlignment(Pos.TOP_LEFT);
+        foodList.setSpacing(5);
+
         foodGroup = new ToggleGroup();
+
+        apple = new RadioButton("Apple");
+        apple.setToggleGroup(foodGroup);
+        apple.setSelected(true);
+
+        grapes = new RadioButton("Grapes");
+        grapes.setToggleGroup(foodGroup);
+
+        meat = new RadioButton("Meat");
+        meat.setToggleGroup(foodGroup);
+
+        water = new RadioButton("Water");
+        water.setToggleGroup(foodGroup);
+
+        ant = new RadioButton("Ant");
+        ant.setToggleGroup(foodGroup);
+
+        grass = new RadioButton("Grass");
+        grass.setToggleGroup(foodGroup);
+
+        foodList.getChildren().addAll(apple, grapes, meat, water,
+                ant, grass);
+
+
+
+        feedView = new VBox();
+        feedView.setSpacing(30);
+        feedView.setPrefWidth(WIDTH);
+        feedView.setAlignment(Pos.CENTER);
+        feedView.setPadding(new Insets(10, 30, 30, 30));
+        feedView.getChildren().add(foodList);
+    }
+
+    public Food getSelectedFood() {
+        return Food.valueOf(foodGroup.getSelectedToggle().toString());
     }
 
     private void configPetView() throws FileNotFoundException {
@@ -113,9 +156,9 @@ public class GUIView {
         petView.setPreserveRatio(true);
     }
 
-    public void updatePetView() throws FileNotFoundException {
+    public void updatePetView(String image) throws FileNotFoundException {
         petView = new ImageView(new Image(new
-                FileInputStream("src/Images/bixby_pet2.gif")));
+                FileInputStream("src/Images/" + image)));
 
         petView.setFitHeight(300);
         petView.setFitWidth(300);
@@ -353,6 +396,10 @@ public class GUIView {
 
     public AnchorPane getGameView() {
         return gameView;
+    }
+
+    public VBox getFeedView() {
+        return feedView;
     }
 
     public TextField getPetNameTxt() {
