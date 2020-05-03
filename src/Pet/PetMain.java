@@ -350,6 +350,38 @@ public class PetMain implements Serializable {
 
     private final int MAX_INCREASE = 10;
 
+    public void decreaseHappiness (int decrease) throws Exception {
+        if (this.happiness - decrease >= 0) {
+            this.happiness -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
+    public void decreaseHunger (int decrease) throws Exception {
+        if (this.hunger - decrease >= 0) {
+            this.hunger -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
+    public void decreaseHygiene (int decrease) throws Exception {
+        if (this.hygiene - decrease >= 0) {
+            this.hygiene -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
+    public void decreaseSleep (int decrease) throws Exception {
+        if (this.sleep - decrease >= 0) {
+            this.sleep -= decrease;
+        }  else {
+            throw new Exception("Statistic can not decrease below 0");
+        }
+    }
+
     /**
      * method that actually interacts with the GUI and main game's Pet instance, and feeds the pet
      * according to the amount of food (quantity) and the type of food (foodType)

@@ -40,5 +40,9 @@ public class StatBar {
         statProgressBar.setProgress(value);
     }
 
+    public void decreaseStatValue(double valueDecrease) {
+        setStatValue(getStatValue() - valueDecrease);
+    }
+
     public double getStatValue() { return statProgressBar.getProgress(); }
 }

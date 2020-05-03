@@ -101,6 +101,11 @@ public class GUIController {
         });
 
         theView.getSkipBtn().setOnAction(event -> {
+            // check if the pet is alive
+//            if (myGame.getMyPet().getHappiness() == 0 || myGame.getMyPet().getHunger() == 0 || myGame.getMyPet().getHygiene() == 0 || myGame.getMyPet().getSleep() == 0 ) {
+//                System.out.println("Your pet is dead, GAME OVER");
+//            }
+
             try {
                 theView.updatePetView(myGame.getMyPet().getPetImage());// from neal's function
             } catch (FileNotFoundException e) {
@@ -108,11 +113,24 @@ public class GUIController {
             }
             setView(theView.getPetView());
 
-            // helper method to update day
-            theView.updateDayLbl(2);
+
             /**
              * Skip functionality (HALF-DONE, need to decrease the stat bars)
              */
+            // decrease stats by 5 everyday
+            try {
+                myGame.getMyPet().decreaseHappiness(10);
+                myGame.getMyPet().decreaseHunger(10);
+                myGame.getMyPet().decreaseSleep(10);
+                myGame.getMyPet().decreaseHygiene(10);
+                theView.getHappinessStats().setStatValue(myGame.getMyPet().getHappiness() / 100.0);
+                theView.getHungerStats().setStatValue(myGame.getMyPet().getHunger() / 100.0);
+                theView.getHygieneStats().setStatValue(myGame.getMyPet().getHygiene() / 100.0);
+                theView.getSleepStats().setStatValue(myGame.getMyPet().getSleep() / 100.0);
+            } catch (Exception e) {
+                System.out.println("Your pet is dead");;
+            }
+
 
             // helper method to update day/age label
             myGame.advanceGameTime(1);
