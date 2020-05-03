@@ -77,6 +77,11 @@ public class GUIController {
              */
         });
 
+        theView.getFeedConfBtn().setOnAction(event -> {
+            System.out.println(theView.getFoodSliderVal());
+            System.out.println(theView.getSelectedFood());
+        });
+
         theView.getWalkBtn().setOnAction(event -> {
             /**
              * Clean functionality

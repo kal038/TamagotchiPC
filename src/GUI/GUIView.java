@@ -32,12 +32,8 @@ public class GUIView {
     private AnchorPane gameView;
 
     private ToggleGroup foodGroup;
-    private RadioButton apple;
-    private RadioButton grapes;
-    private RadioButton meat;
-    private RadioButton water;
-    private RadioButton ant;
-    private RadioButton grass;
+    private Slider foodSlider;
+    private Button feedConfBtn;
 
     private StatBar hungerStats;
     private StatBar hygieneStats;
@@ -107,40 +103,50 @@ public class GUIView {
         VBox foodList = new VBox();
         foodList.setPrefWidth(WIDTH);
         foodList.setAlignment(Pos.TOP_LEFT);
-        foodList.setSpacing(5);
+        foodList.setSpacing(10);
 
         foodGroup = new ToggleGroup();
 
-        apple = new RadioButton("Apple");
+        RadioButton apple = new RadioButton("Apple");
         apple.setToggleGroup(foodGroup);
         apple.setSelected(true);
 
-        grapes = new RadioButton("Grapes");
+        RadioButton grapes = new RadioButton("Grapes");
         grapes.setToggleGroup(foodGroup);
 
-        meat = new RadioButton("Meat");
+        RadioButton meat = new RadioButton("Meat");
         meat.setToggleGroup(foodGroup);
 
-        water = new RadioButton("Water");
+        RadioButton water = new RadioButton("Water");
         water.setToggleGroup(foodGroup);
 
-        ant = new RadioButton("Ant");
+        RadioButton ant = new RadioButton("Ant");
         ant.setToggleGroup(foodGroup);
 
-        grass = new RadioButton("Grass");
+        RadioButton grass = new RadioButton("Grass");
         grass.setToggleGroup(foodGroup);
 
         foodList.getChildren().addAll(apple, grapes, meat, water,
                 ant, grass);
 
+        foodSlider = new Slider(1, 10, 1);
+        foodSlider.setShowTickMarks(true);
+        foodSlider.setShowTickLabels(true);
+        foodSlider.setMajorTickUnit(1);
+        foodSlider.setBlockIncrement(1);
 
+        feedConfBtn = createMenuButton("Feed This!");
 
         feedView = new VBox();
         feedView.setSpacing(30);
         feedView.setPrefWidth(WIDTH);
         feedView.setAlignment(Pos.CENTER);
         feedView.setPadding(new Insets(10, 30, 30, 30));
-        feedView.getChildren().add(foodList);
+        feedView.getChildren().addAll(foodList, foodSlider, feedConfBtn);
+    }
+
+    public int getFoodSliderVal() {
+        return (int) foodSlider.getValue();
     }
 
     public Food getSelectedFood() {
@@ -167,6 +173,7 @@ public class GUIView {
 
     public void updateDayLbl(int day) {
         dayLbl.setText("Day " + day);
+        petAgeLbl.setText(day + " day");
 
         bottomPane.getChildren().clear();
         bottomPane.getChildren().addAll(dayLbl, menuBtn, skipBtn, statsBtn);
@@ -398,12 +405,26 @@ public class GUIView {
         return gameView;
     }
 
-    public VBox getFeedView() {
-        return feedView;
+    public Button getFeedConfBtn() { return feedConfBtn; }
+
+    public VBox getFeedView() { return feedView; }
+
+    public TextField getPetNameTxt() { return petNameTxt; }
+
+    public StatBar getHungerStats() {
+        return hungerStats;
     }
 
-    public TextField getPetNameTxt() {
-        return petNameTxt;
+    public StatBar getHygieneStats() {
+        return hygieneStats;
+    }
+
+    public StatBar getSleepStats() {
+        return sleepStats;
+    }
+
+    public StatBar getHappinessStats() {
+        return happinessStats;
     }
 
     public void setPetNameLbl(String petName) {
