@@ -1,5 +1,6 @@
 package GUI;
 
+import Pet.Food;
 import Pet.Game;
 import Pet.PetMain;
 import javafx.scene.Node;
@@ -77,14 +78,21 @@ public class GUIController {
                 viewMode = FEED;
                 setView(theView.getFeedView());
             }
-            /**
-             * Feed Functionality
-             */
+
         });
 
         theView.getFeedConfBtn().setOnAction(event -> {
             System.out.println(theView.getFoodSliderVal());
             System.out.println(theView.getSelectedFood());
+            /**
+             * Feed Functionality (DONE)
+             */
+            try {
+                myPet.feedPet(theView.getSelectedFood(), theView.getFoodSliderVal());
+                theView.getHungerStats().setStatValue(myGame.getMyPet().getHunger() / 100.0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         });
 
         theView.getWalkBtn().setOnAction(event -> {
@@ -139,10 +147,7 @@ public class GUIController {
         });
 
         theView.getSkipBtn().setOnAction(event -> {
-            // check if the pet is alive
-//            if (myGame.getMyPet().getHappiness() == 0 || myGame.getMyPet().getHunger() == 0 || myGame.getMyPet().getHygiene() == 0 || myGame.getMyPet().getSleep() == 0 ) {
-//                System.out.println("Your pet is dead, GAME OVER");
-//            }
+
 
             try {
                 theView.updatePetImgView("bixby_pet.gif");// from neal's function
