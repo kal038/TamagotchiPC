@@ -8,10 +8,13 @@ import java.io.FileNotFoundException;
 public class GUIController {
     private GUIView theView;
 
-    private static final int PET = 0;
+    private static final int MAIN = 0;
     private static final int STATS = 1;
     private static final int FEED = 2;
-    private static final int MENU = 3;
+    private static final int WALK = 3;
+    private static final int SLEEP = 4;
+    private static final int PET = 5;
+    private static final int MENU = 6;
 
     private int viewMode;
 
@@ -21,7 +24,7 @@ public class GUIController {
         setRoot(theView.getStartView());
 
         theView.getNewPetBtn().setOnAction(event -> {
-            viewMode = PET;
+            viewMode = MAIN;
             /**
              * Initialize pet here (DONE)
              *
@@ -31,7 +34,7 @@ public class GUIController {
             System.out.println(petName);
             theView.setPetNameLbl(petName);
             setRoot(theView.getGameView());
-            setView(theView.getPetView());
+            setView(theView.getPetImgView());
         });
 
         theView.getLoadPetBtn().setOnAction(event -> {
@@ -42,8 +45,8 @@ public class GUIController {
 
         theView.getMenuBtn().setOnAction(event -> {
             if (viewMode == MENU) {
-                viewMode = PET;
-                setView(theView.getPetView());
+                viewMode = MAIN;
+                setView(theView.getPetImgView());
             } else {
                 viewMode = MENU;
                 setView(theView.getMenuView());
@@ -52,8 +55,8 @@ public class GUIController {
 
         theView.getStatsBtn().setOnAction(event -> {
             if (viewMode == STATS) {
-                viewMode = PET;
-                setView(theView.getPetView());
+                viewMode = MAIN;
+                setView(theView.getPetImgView());
             } else {
                 viewMode = STATS;
                 setView(theView.getStatsView());
@@ -62,8 +65,8 @@ public class GUIController {
 
         theView.getFeedBtn().setOnAction(event -> {
             if (viewMode == FEED) {
-                viewMode = PET;
-                setView(theView.getPetView());
+                viewMode = MAIN;
+                setView(theView.getPetImgView());
             } else {
                 viewMode = FEED;
                 setView(theView.getFeedView());
@@ -79,18 +82,39 @@ public class GUIController {
         });
 
         theView.getWalkBtn().setOnAction(event -> {
+            if (viewMode == WALK) {
+                viewMode = MAIN;
+                setView(theView.getPetImgView());
+            } else {
+                viewMode = WALK;
+                setView(theView.getWalkView());
+            }
             /**
-             * Clean functionality
+             * Walk functionality
              */
         });
 
         theView.getPetBtn().setOnAction(event -> {
+            if (viewMode == PET) {
+                viewMode = MAIN;
+                setView(theView.getPetImgView());
+            } else {
+                viewMode = PET;
+                setView(theView.getPetView());
+            }
             /**
              * Pet functionality
              */
         });
 
         theView.getSleepBtn().setOnAction(event -> {
+            if (viewMode == SLEEP) {
+                viewMode = MAIN;
+                setView(theView.getPetImgView());
+            } else {
+                viewMode = SLEEP;
+                setView(theView.getSleepView());
+            }
             /**
              * Sleep functionality
              */
@@ -98,11 +122,12 @@ public class GUIController {
 
         theView.getSkipBtn().setOnAction(event -> {
             try {
-                theView.updatePetView("bixby_pet.gif");// from neal's function
+                theView.updatePetImgView("bixby_pet.gif");// from neal's function
+                viewMode = MAIN;
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-            setView(theView.getPetView());
+            setView(theView.getPetImgView());
 
             // helper method to update day
             theView.updateDayLbl(2);

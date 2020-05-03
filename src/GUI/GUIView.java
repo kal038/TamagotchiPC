@@ -24,16 +24,25 @@ public class GUIView {
 
     private Label dayLbl;
 
-    private ImageView petView;
+    private ImageView petImgView;
     private GridPane statsView;
     private VBox menuView;
     private VBox startView;
     private VBox feedView;
+    private VBox walkView;
+    private VBox sleepView;
+    private VBox petView;
     private AnchorPane gameView;
 
     private ToggleGroup foodGroup;
     private Slider foodSlider;
     private Button feedConfBtn;
+    private Slider walkSlider;
+    private Button walkConfBtn;
+    private Slider sleepSlider;
+    private Button sleepConfBtn;
+    private Slider petSlider;
+    private Button petConfBtn;
 
     private StatBar hungerStats;
     private StatBar hygieneStats;
@@ -69,23 +78,21 @@ public class GUIView {
         configStartView();
 
         configTopPane();
-
         configBottomPane();
 
         configMainDisplay();
-
-        configPetView();
+        configPetImgView();
 
         configFeedView();
+        configWalkView();
+        configSleepView();
+        configPetView();
 
         configMenuView();
-
         configStatsView();
 
         gameView = new AnchorPane();
         gameView.getChildren().addAll(topPane, mainDisplay, bottomPane);
-
-//        root.getChildren().addAll(startView);
     }
 
     private void configMenuView() {
@@ -126,50 +133,93 @@ public class GUIView {
         RadioButton grass = new RadioButton("Grass");
         grass.setToggleGroup(foodGroup);
 
-        foodList.getChildren().addAll(apple, grapes, meat, water,
-                ant, grass);
+        foodList.getChildren().addAll(new Label("Item to Feed :"), apple, grapes,
+                meat, water, ant, grass);
 
-        foodSlider = new Slider(1, 10, 1);
-        foodSlider.setShowTickMarks(true);
-        foodSlider.setShowTickLabels(true);
-        foodSlider.setMajorTickUnit(1);
-        foodSlider.setBlockIncrement(1);
+        foodSlider = createActionSlider();
 
         feedConfBtn = createMenuButton("Feed This!");
 
         feedView = new VBox();
-        feedView.setSpacing(30);
+        feedView.setSpacing(10);
         feedView.setPrefWidth(WIDTH);
         feedView.setAlignment(Pos.CENTER);
         feedView.setPadding(new Insets(10, 30, 30, 30));
-        feedView.getChildren().addAll(foodList, foodSlider, feedConfBtn);
+        feedView.getChildren().addAll(foodList,
+                new Label("Quantity of Food :"), foodSlider, feedConfBtn);
     }
 
-    public int getFoodSliderVal() {
-        return (int) foodSlider.getValue();
+    private void configPetView() {
+        petSlider = createActionSlider();
+
+        petConfBtn = createMenuButton("Pet Now!");
+
+        petView = new VBox();
+        petView.setSpacing(30);
+        petView.setPrefWidth(WIDTH);
+        petView.setAlignment(Pos.CENTER);
+        petView.setPadding(new Insets(60, 30, 30, 30));
+        petView.getChildren().addAll(new Label("Number of Pets :"), petSlider,
+                petConfBtn);
     }
+
+    private void configSleepView() {
+        sleepSlider = createActionSlider();
+
+        sleepConfBtn = createMenuButton("Sleep Now!");
+
+        sleepView = new VBox();
+        sleepView.setSpacing(30);
+        sleepView.setPrefWidth(WIDTH);
+        sleepView.setAlignment(Pos.CENTER);
+        sleepView.setPadding(new Insets(60, 30, 30, 30));
+        sleepView.getChildren().addAll(new Label("Time to Sleep (mins) :"), sleepSlider,
+                sleepConfBtn);
+    }
+
+    private void configWalkView() {
+        walkSlider = createActionSlider();
+
+        walkConfBtn = createMenuButton("Walk Now!");
+
+        walkView = new VBox();
+        walkView.setSpacing(30);
+        walkView.setPrefWidth(WIDTH);
+        walkView.setAlignment(Pos.CENTER);
+        walkView.setPadding(new Insets(60, 30, 30, 30));
+        walkView.getChildren().addAll(new Label("Time to Walk (mins) :"), walkSlider,
+                walkConfBtn);
+    }
+
+    public int getFoodSliderVal() { return (int) foodSlider.getValue(); }
+
+    public int getWalkSliderVal() { return (int) walkSlider.getValue(); }
+
+    public int getSleepSliderVal() { return (int) sleepSlider.getValue(); }
+
+    public int getPetSliderVal() { return (int) petSlider.getValue(); }
 
     public Food getSelectedFood() {
         return Food.valueOf(foodGroup.getSelectedToggle().
                 toString().split("\'")[1].toUpperCase());
     }
 
-    private void configPetView() throws FileNotFoundException {
-        petView = new ImageView(new Image(new
+    private void configPetImgView() throws FileNotFoundException {
+        petImgView = new ImageView(new Image(new
                 FileInputStream("src/Images/bixby_pet.gif")));
 
-        petView.setFitHeight(300);
-        petView.setFitWidth(300);
-        petView.setPreserveRatio(true);
+        petImgView.setFitHeight(300);
+        petImgView.setFitWidth(300);
+        petImgView.setPreserveRatio(true);
     }
 
-    public void updatePetView(String image) throws FileNotFoundException {
-        petView = new ImageView(new Image(new
+    public void updatePetImgView(String image) throws FileNotFoundException {
+        petImgView = new ImageView(new Image(new
                 FileInputStream("src/Images/" + image)));
 
-        petView.setFitHeight(300);
-        petView.setFitWidth(300);
-        petView.setPreserveRatio(true);
+        petImgView.setFitHeight(300);
+        petImgView.setFitWidth(300);
+        petImgView.setPreserveRatio(true);
     }
 
     public void updateDayLbl(int day) {
@@ -269,7 +319,7 @@ public class GUIView {
 
     private void configTopPane() {
         feedBtn = createActionButton("Feed");
-        walkBtn = createActionButton("Clean");
+        walkBtn = createActionButton("Walk");
         sleepBtn = createActionButton("Sleep");
         petBtn = createActionButton("Pet");
 
@@ -321,6 +371,16 @@ public class GUIView {
         return actionButton;
     }
 
+    private Slider createActionSlider() {
+        Slider actionSlider = new Slider(1, 10, 1);
+        actionSlider.setShowTickMarks(true);
+        actionSlider.setShowTickLabels(true);
+        actionSlider.setMajorTickUnit(1);
+        actionSlider.setBlockIncrement(1);
+
+        return actionSlider;
+    }
+
     private void createDayLbl() {
         dayLbl = new Label("Day 1");
         dayLbl.setMinHeight(50);
@@ -338,8 +398,8 @@ public class GUIView {
         return mainDisplay;
     }
 
-    public ImageView getPetView() {
-        return petView;
+    public ImageView getPetImgView() {
+        return petImgView;
     }
 
     public GridPane getStatsView() {
@@ -410,27 +470,37 @@ public class GUIView {
 
     public VBox getFeedView() { return feedView; }
 
+    public VBox getWalkView() { return walkView; }
+
     public TextField getPetNameTxt() { return petNameTxt; }
 
-    public StatBar getHungerStats() {
-        return hungerStats;
+    public StatBar getHungerStats() { return hungerStats; }
+
+    public StatBar getHygieneStats() { return hygieneStats; }
+
+    public StatBar getSleepStats() { return sleepStats; }
+
+    public StatBar getHappinessStats() { return happinessStats; }
+
+    public void setPetNameLbl(String petName) { this.petNameLbl.setText(petName); }
+
+    public Button getWalkConfBtn() {
+        return walkConfBtn;
     }
 
-    public StatBar getHygieneStats() {
-        return hygieneStats;
+    public Button getSleepConfBtn() {
+        return sleepConfBtn;
     }
 
-    public StatBar getSleepStats() {
-        return sleepStats;
+    public Button getPetConfBtn() {
+        return petConfBtn;
     }
 
-    public StatBar getHappinessStats() {
-        return happinessStats;
+    public VBox getSleepView() {
+        return sleepView;
     }
 
-    public void setPetNameLbl(String petName) {
-        this.petNameLbl.setText(petName);
+    public VBox getPetView() {
+        return petView;
     }
-
-
 }
