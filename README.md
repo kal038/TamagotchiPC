@@ -19,7 +19,9 @@ JavaFX 14
 Run the .jar file in the dist directory. Directions below:  
 1. cd into the project root directory
 2. use this command :   java --module-path /home/accounts/student/k/kal038/lib/java/javafx-sdk-14/lib/ --add-modules=javafx.controls -jar /home/accounts/student/k/kal038/BixbyFinalProject/dist/BixbyFinalProject.jar   
-3. change the paths above with your paths to javafx and your full address to the .jar file  
+3. change the paths above with your paths to javafx and your full address to the .jar file 
+
+**IMPORTANT!!!!!!: Link to video presentation: https://drive.google.com/open?id=1l98ZX2lyqJ7MKN8QdMmwtGVRZfDAQwhU** 
 
 Reference:
 https://en.wikipedia.org/wiki/Tamagotchi
