@@ -18,7 +18,10 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-
+/**
+ * GUIMain class - runs the GUI itself by connecting
+ * GUIView and GUIController
+ */
 public class GUIMain extends Application {
     private GUIView theView;
     private GUIController theController;

@@ -8,11 +8,16 @@ import javafx.scene.Node;
 import java.io.FileNotFoundException;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * GUIController class that connects GUIView
+ * and the Pet Model
+ */
 public class GUIController {
     private GUIView theView;
     private PetMain myPet;
     private Game myGame;
 
+    /** All the view mode constants */
     private static final int MAIN = 0;
     private static final int STATS = 1;
     private static final int FEED = 2;
@@ -21,6 +26,7 @@ public class GUIController {
     private static final int PET = 5;
     private static final int MENU = 6;
 
+    /** variable to keep track of current view mode */
     private int viewMode;
 
     public GUIController(GUIView theView) {
@@ -30,10 +36,6 @@ public class GUIController {
 
         theView.getNewPetBtn().setOnAction(event -> {
             viewMode = MAIN;
-            /**
-             * Initialize pet here (DONE)
-             *
-             */
             String petName = theView.getPetNameTxt().getText();
             myPet = new PetMain(petName);
             // initialize the game instance
@@ -45,9 +47,6 @@ public class GUIController {
         });
 
         theView.getLoadPetBtn().setOnAction(event -> {
-            /**
-             * load functionality
-             */
             viewMode = MAIN;
             myPet =  new PetMain("DummyPet");
             myGame = new Game(myPet);
@@ -92,9 +91,6 @@ public class GUIController {
         theView.getFeedConfBtn().setOnAction(event -> {
             System.out.println(theView.getFoodSliderVal());
             System.out.println(theView.getSelectedFood());
-            /**
-             * Feed Functionality (DONE)
-             */
             try {
                 myPet.feedPet(theView.getSelectedFood(), theView.getFoodSliderVal());
                 theView.getHungerStats().setStatValue(myGame.getMyPet().getHunger() / 100.0);
@@ -111,9 +107,6 @@ public class GUIController {
                 viewMode = WALK;
                 setView(theView.getWalkView());
             }
-            /**
-             * Walk functionality
-             */
         });
 
         theView.getWalkConfBtn().setOnAction(event -> {
@@ -134,9 +127,6 @@ public class GUIController {
                 viewMode = PET;
                 setView(theView.getPetView());
             }
-            /**
-             * Pet functionality
-             */
         });
 
         theView.getPetConfBtn().setOnAction(event -> {
@@ -190,10 +180,6 @@ public class GUIController {
             }
             setView(theView.getPetImgView());
 
-
-            /**
-             * Skip functionality (DONE)
-             */
             // decrease stats by 10 everyday
             try {
                 myGame.getMyPet().decreaseHappiness(10);
@@ -223,7 +209,6 @@ public class GUIController {
                 System.out.println(e);
             }
 
-
             // helper method to update day/age label
             myGame.advanceGameTime(1);
             theView.updateDayLbl(myGame.getMyPet().getAge());
@@ -231,19 +216,24 @@ public class GUIController {
         });
 
         theView.getSaveExitBtn().setOnAction(event -> {
-            /**
-             * Save functionality here
-             */
             myGame.getMyPet().saveState();
             System.exit(0);
         });
     }
 
+    /**
+     * Sets the mainDisplay view to the inputted Node
+     * @param view - the input node to set mainDisplay
+     */
     private void setView(Node view) {
         theView.getMainDisplay().getChildren().clear();
         theView.getMainDisplay().getChildren().add(view);
     }
 
+    /**
+     * Sets the root to the inputted Node
+     * @param view - the input node to set root
+     */
     private void setRoot(Node view) {
         theView.getRoot().getChildren().clear();
         theView.getRoot().getChildren().add(view);

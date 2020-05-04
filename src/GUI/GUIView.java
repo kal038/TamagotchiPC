@@ -14,15 +14,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class GUIView {
+    /** The dimension of the GUI Window */
     private static final int HEIGHT = 500;
     private static final int WIDTH = 500;
 
+    /** All the view elements */
     private AnchorPane root;
     private HBox topPane;
     private HBox bottomPane;
     private VBox mainDisplay;
-
-    private Label dayLbl;
 
     private ImageView petImgView;
     private VBox deadPetView;
@@ -35,6 +35,10 @@ public class GUIView {
     private VBox petView;
     private AnchorPane gameView;
 
+    /** The label to display current game time */
+    private Label dayLbl;
+
+    /** Variables to run the action buttons */
     private ToggleGroup foodGroup;
     private Slider foodSlider;
     private Button feedConfBtn;
@@ -45,11 +49,13 @@ public class GUIView {
     private Slider petSlider;
     private Button petConfBtn;
 
+    /** All the stat bar objects for each pet attribute */
     private StatBar hungerStats;
     private StatBar hygieneStats;
     private StatBar sleepStats;
     private StatBar happinessStats;
 
+    /** All the action buttons */
     private Button feedBtn;
     private Button walkBtn;
     private Button sleepBtn;
@@ -64,8 +70,10 @@ public class GUIView {
     private Button newPetBtn;
     private Button loadPetBtn;
 
+    /** Text field to input pet name */
     private TextField petNameTxt;
 
+    /** The labels to show pet name and age */
     private Label petNameLbl = new Label("PetExample");
     private Label petAgeLbl = new Label("1 day");
 
@@ -97,6 +105,10 @@ public class GUIView {
         gameView.getChildren().addAll(topPane, mainDisplay, bottomPane);
     }
 
+    /**
+     * Configures the menu that shows up when the user
+     * presses the "Menu" Button
+     */
     private void configMenuView() {
         saveExitBtn = createMenuButton("Save and Exit");
 
@@ -108,6 +120,10 @@ public class GUIView {
         menuView.getChildren().addAll(saveExitBtn);
     }
 
+    /**
+     * Configures the view that asks user to
+     * select the food type and quantity to feed pet
+     */
     private void configFeedView() {
         VBox foodList = new VBox();
         foodList.setPrefWidth(WIDTH);
@@ -151,6 +167,10 @@ public class GUIView {
                 new Label("Quantity of Food :"), foodSlider, feedConfBtn);
     }
 
+    /**
+     * Configures the view that asks user for the number
+     * of pets to give when petting
+     */
     private void configPetView() {
         petSlider = createActionSlider();
 
@@ -165,6 +185,10 @@ public class GUIView {
                 petConfBtn);
     }
 
+    /**
+     * Configures the view that asks user for the minutes
+     * pet is allowed to sleep
+     */
     private void configSleepView() {
         sleepSlider = createActionSlider();
 
@@ -179,6 +203,10 @@ public class GUIView {
                 sleepConfBtn);
     }
 
+    /**
+     * Configures the view that asks user for the minutes
+     * pet is allowed to walk
+     */
     private void configWalkView() {
         walkSlider = createActionSlider();
 
@@ -193,19 +221,21 @@ public class GUIView {
                 walkConfBtn);
     }
 
-    public int getFoodSliderVal() { return (int) foodSlider.getValue(); }
-
-    public int getWalkSliderVal() { return (int) walkSlider.getValue(); }
-
-    public int getSleepSliderVal() { return (int) sleepSlider.getValue(); }
-
-    public int getPetSliderVal() { return (int) petSlider.getValue(); }
-
+    /**
+     * Gets the Food enum based on which radio button
+     * user selected in the Feed View menu
+     * @return
+     */
     public Food getSelectedFood() {
         return Food.valueOf(foodGroup.getSelectedToggle().
                 toString().split("\'")[1].toUpperCase());
     }
 
+    /**
+     * Configures the initial pet image animation that
+     * appears on mainDisplay
+     * @throws FileNotFoundException
+     */
     private void configPetImgView() throws FileNotFoundException {
         petImgView = new ImageView(new Image(new
                 FileInputStream("src/Images/bixby_pet.gif")));
@@ -215,6 +245,11 @@ public class GUIView {
         petImgView.setPreserveRatio(true);
     }
 
+    /**
+     * Configures the view that indicates to the user
+     * that the pet has died
+     * @throws FileNotFoundException
+     */
     private void configDeadPetView() throws FileNotFoundException {
         ImageView deadPetImg = new ImageView(new Image(new
                 FileInputStream("src/Images/dead_img.png")));
@@ -232,6 +267,11 @@ public class GUIView {
         deadPetView.getChildren().addAll(new Label("Your Pet Died!"), deadPetImg);
     }
 
+    /**
+     * Updates the pet image with the given image file name
+     * @param image - the image file name to update pet image with
+     * @throws FileNotFoundException
+     */
     public void updatePetImgView(String image) throws FileNotFoundException {
         petImgView = new ImageView(new Image(new
                 FileInputStream("src/Images/" + image)));
@@ -241,6 +281,10 @@ public class GUIView {
         petImgView.setPreserveRatio(true);
     }
 
+    /**
+     * Updates the game time indicator label
+     * @param day - the day to set
+     */
     public void updateDayLbl(int day) {
         dayLbl.setText("Day " + day);
         petAgeLbl.setText(day + " day");
@@ -249,6 +293,9 @@ public class GUIView {
         bottomPane.getChildren().addAll(dayLbl, menuBtn, skipBtn, statsBtn);
     }
 
+    /**
+     * Config the initial mainDisplay VBox
+     */
     private void configMainDisplay() {
         mainDisplay = new VBox();
         mainDisplay.setPrefWidth(WIDTH);
@@ -262,6 +309,11 @@ public class GUIView {
         mainDisplay.setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Configures the start menu view that asks the user
+     * to create a new pet or load one from memory
+     * @throws FileNotFoundException
+     */
     private void configStartView() throws FileNotFoundException {
         ImageView startImg = new ImageView(new Image(new
                 FileInputStream("src/Images/menu_img.png")));
@@ -286,6 +338,10 @@ public class GUIView {
                 petNameTxt, newPetBtn, loadPetBtn);
     }
 
+    /**
+     * Configures the stat view that shows the user the name, age
+     * and all the stats of the pet
+     */
     private void configStatsView() {
         initStatBars();
 
@@ -329,6 +385,9 @@ public class GUIView {
         statsView.add(happinessStats.getStatProgressBar(), 1, 6);
     }
 
+    /**
+     * initializes all the stat bars
+     */
     private void initStatBars() {
         hungerStats = new StatBar(StatTypes.HUNGER);
         hygieneStats = new StatBar(StatTypes.HYGIENE);
@@ -336,6 +395,10 @@ public class GUIView {
         happinessStats = new StatBar(StatTypes.HAPPINESS);
     }
 
+    /**
+     * Configures the top pane of the game play display
+     * that includes all the action buttons
+     */
     private void configTopPane() {
         feedBtn = createActionButton("Feed");
         walkBtn = createActionButton("Walk");
@@ -354,6 +417,10 @@ public class GUIView {
         topPane.setLayoutY(0);
     }
 
+    /**
+     * Configures the bottom pane of the game play display
+     * that includes the time indicator and all other buttons
+     */
     private void configBottomPane() {
         menuBtn = createActionButton("Menu");
         skipBtn = createActionButton("Skip Day");
@@ -376,6 +443,11 @@ public class GUIView {
         bottomPane.setLayoutY(y);
     }
 
+    /**
+     * creates menu buttons with certain dimensions
+     * @param btnLbl - the label for the button
+     * @return - the created button object
+     */
     private Button createMenuButton(String btnLbl) {
         Button menuButton = new Button(btnLbl);
         menuButton.setPrefWidth(150);
@@ -383,6 +455,11 @@ public class GUIView {
         return menuButton;
     }
 
+    /**
+     * creates action buttons with certain dimensions
+     * @param btnLbl - the label for the button
+     * @return - the created button object
+     */
     private Button createActionButton(String btnLbl) {
         Button actionButton = new Button(btnLbl);
         actionButton.setPrefHeight(50);
@@ -390,6 +467,10 @@ public class GUIView {
         return actionButton;
     }
 
+    /**
+     * creates a slider for the action menus
+     * @return - the created Slider object
+     */
     private Slider createActionSlider() {
         Slider actionSlider = new Slider(1, 10, 1);
         actionSlider.setShowTickMarks(true);
@@ -400,6 +481,9 @@ public class GUIView {
         return actionSlider;
     }
 
+    /**
+     * Creates the day indicator / Game time label
+     */
     private void createDayLbl() {
         dayLbl = new Label("Day 1");
         dayLbl.setMinHeight(50);
@@ -502,6 +586,14 @@ public class GUIView {
     public StatBar getHappinessStats() { return happinessStats; }
 
     public void setPetNameLbl(String petName) { this.petNameLbl.setText(petName); }
+
+    public int getFoodSliderVal() { return (int) foodSlider.getValue(); }
+
+    public int getWalkSliderVal() { return (int) walkSlider.getValue(); }
+
+    public int getSleepSliderVal() { return (int) sleepSlider.getValue(); }
+
+    public int getPetSliderVal() { return (int) petSlider.getValue(); }
 
     public VBox getDeadPetView() {
         return deadPetView;
