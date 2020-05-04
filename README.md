@@ -15,8 +15,12 @@ Tamagotchi console, which has become rarer to find these days.
 The game is compiled from 4 main packages: GUI, Images, Pet, and Main. GUI contains the front end user interface of the game. Images contains all sprites created to represent the pet. The Pet class represents the logical model of the pet as well as the features of the game itself and the main class is where we run a game instance, pulling in components from the different packages that we have  
 **Libraries**   
 JavaFX 14  
-**Run Instructions** 
-Run the .jar file in the dist directory
+**Run Instructions IMPORTANT!!!!!!!** 
+Run the .jar file in the dist directory. Directions below:  
+1. cd into the project root directory
+2. use this command :   java --module-path /home/accounts/student/k/kal038/lib/java/javafx-sdk-14/lib/ --add-modules=javafx.controls -jar /home/accounts/student/k/kal038/BixbyFinalProject/dist/BixbyFinalProject.jar   
+3. change the paths above with your paths to javafx and your full address to the .jar file  
+
 Reference:
 https://en.wikipedia.org/wiki/Tamagotchi
   
